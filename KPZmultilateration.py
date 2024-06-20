@@ -1,8 +1,8 @@
 import math
 from scipy.optimize import minimize
 import pandas as pd
-import database as database
-import functions
+import KPZdatabase as database
+import NEW.KPZfunctions as KPZfunctions
 
 N = 3               # Environmental factor constant range: 2-4
 R = 6371000         # Averge radius of Earth in meters
@@ -101,7 +101,7 @@ def calculate_user_location():
     query_lon = ("SELECT FINAL_GPS_POS_LON from networks WHERE BSSID=%s")
 
     # Changing "," in SSIDs to "." to load to dataframe
-    functions.change_commas_to_periods_SSIDS(RECIEVED_FILE)
+    KPZfunctions.change_commas_to_periods_SSIDS(RECIEVED_FILE)
 
     # Loading to dataframe
     file = pd.read_csv (RECIEVED_FILE)   
@@ -132,7 +132,7 @@ def calculate_user_location():
         if len(latitudes) >= RP_MIN_NUMBER and len(longitudes) >= RP_MIN_NUMBER:
             latitudes = [i for sub in latitudes for i in sub]
             longitudes = [i for sub in longitudes for i in sub]
-            locations = functions.merge(list(map(float, latitudes)), list(map(float, longitudes)))
+            locations = KPZfunctions.merge(list(map(float, latitudes)), list(map(float, longitudes)))
             user_location = calculate_location(error_function, locations, distances)
             USER_LOCATION = "{:.09f}".format(user_location[0]) + ',' + "{:.09f}".format(user_location[1])
             print("[LOCALIZE] Calculated user location: ", USER_LOCATION)

@@ -1,7 +1,7 @@
 import mysql.connector
 import pandas as pd
 import glob
-import functions
+import NEW.KPZfunctions as KPZfunctions
 import math
 # CONSTANT
 DB_NAME = 'database_kpz_plume'
@@ -122,7 +122,7 @@ def read_all_data_folder():
         csv_files = glob.glob(path + "/*.csv")
 
         for filename in csv_files:
-            functions.change_commas_to_periods_SSIDS_sniffer(filename)
+            KPZfunctions.change_commas_to_periods_SSIDS_sniffer(filename)
 
         df_list = (pd.read_csv(file) for file in csv_files)
         df = pd.concat(df_list, ignore_index = True)
